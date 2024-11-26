@@ -32,6 +32,8 @@ contract ControlStructures {
         } else if (_time >= 1800 && _time <= 2200) {
             return "Evening!";
         }
-        // Default case removed since all valid ranges are handled above.
+
+        // Default return to handle unspecified cases
+        return "Invalid time range";
     }
 }
