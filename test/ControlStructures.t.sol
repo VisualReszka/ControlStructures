@@ -12,19 +12,19 @@ contract ControlStructuresTest is Test {
         controlStructures = new ControlStructures();
     }
 
-function testFizzBuzz() public view {
-    string memory result = controlStructures.fizzBuzz(15);
-    assertEq(result, "FizzBuzz", "Expected FizzBuzz");
+    function testFizzBuzz() public view {
+        string memory result = controlStructures.fizzBuzz(15);
+        assertEq(result, "FizzBuzz", "Expected FizzBuzz");
 
-    result = controlStructures.fizzBuzz(3);
-    assertEq(result, "Fizz", "Expected Fizz");
+        result = controlStructures.fizzBuzz(3);
+        assertEq(result, "Fizz", "Expected Fizz");
 
-    result = controlStructures.fizzBuzz(5);
-    assertEq(result, "Buzz", "Expected Buzz");
+        result = controlStructures.fizzBuzz(5);
+        assertEq(result, "Buzz", "Expected Buzz");
 
-    result = controlStructures.fizzBuzz(7);
-    assertEq(result, "Splat", "Expected Splat");
-}
+        result = controlStructures.fizzBuzz(7);
+        assertEq(result, "Splat", "Expected Splat");
+    }
 
     // Test DoNotDisturb function
     function testDoNotDisturb() public {
