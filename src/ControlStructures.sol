@@ -61,5 +61,4 @@ contract ControlStructures {
         // Fallback return to satisfy the compiler (this will never be reached)
         return "";
     }
-
 }
