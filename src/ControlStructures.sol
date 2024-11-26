@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.13;
 
-// Custom error for AfterHours
+// Define custom error for AfterHours
 error AfterHours(uint256 time);
 
 contract ControlStructures {
@@ -20,22 +20,22 @@ contract ControlStructures {
 
     // DoNotDisturb function
     function doNotDisturb(uint256 _time) public pure returns (string memory) {
-        // Panic if time is out of range
+        // Trigger a Panic (0x1) if time is out of bounds
         if (_time >= 2400) {
-            revert("Time out of bounds"); // Triggers an error for invalid time
+            assert(false); // Panic: Time out of bounds
         }
 
-        // Revert with custom error if time is after hours
+        // Revert with custom error for after hours
         if (_time > 2200 || _time < 800) {
             revert AfterHours(_time);
         }
 
-        // Revert during lunch
+        // Revert with specific string for lunch time
         if (_time >= 1200 && _time <= 1259) {
             revert("At lunch!");
         }
 
-        // Return time-specific greetings
+        // Return greetings for valid times
         if (_time >= 800 && _time <= 1199) {
             return "Morning!";
         } else if (_time >= 1300 && _time <= 1799) {
@@ -44,7 +44,7 @@ contract ControlStructures {
             return "Evening!";
         }
 
-        // Fallback for unexpected time ranges
+        // Fallback for unexpected cases (shouldn't be reached)
         return "Invalid time range";
     }
 }

@@ -7,47 +7,54 @@ import "../src/ControlStructures.sol";
 contract ControlStructuresTest is Test {
     ControlStructures controlStructures;
 
-    // Runs before each test
     function setUp() public {
         controlStructures = new ControlStructures();
     }
 
-    function testFizzBuzz() public view {
-        string memory result = controlStructures.fizzBuzz(15);
-        assertEq(result, "FizzBuzz", "Expected FizzBuzz");
-
-        result = controlStructures.fizzBuzz(3);
-        assertEq(result, "Fizz", "Expected Fizz");
-
-        result = controlStructures.fizzBuzz(5);
-        assertEq(result, "Buzz", "Expected Buzz");
-
-        result = controlStructures.fizzBuzz(7);
-        assertEq(result, "Splat", "Expected Splat");
+    // Test FizzBuzz function
+    function testFizzBuzz() public {
+        assertEq(controlStructures.fizzBuzz(3), "Fizz");
+        assertEq(controlStructures.fizzBuzz(5), "Buzz");
+        assertEq(controlStructures.fizzBuzz(15), "FizzBuzz");
+        assertEq(controlStructures.fizzBuzz(7), "Splat");
     }
 
-    // Test DoNotDisturb function
-    function testDoNotDisturb() public {
-        // Expect revert for time out of bounds
-        vm.expectRevert(bytes("Time out of bounds"));
+    // Test DoNotDisturb function for time >= 2400 (Panic)
+    function testDoNotDisturbOutOfBounds() public {
+        vm.expectRevert(); // Expect Panic (0x1)
         controlStructures.doNotDisturb(2400);
+    }
 
-        // Expect custom error AfterHours
+    // Test DoNotDisturb function for AfterHours error
+    function testDoNotDisturbAfterHours() public {
         vm.expectRevert(abi.encodeWithSelector(AfterHours.selector, 2300));
         controlStructures.doNotDisturb(2300);
 
-        // Expect revert for "At lunch!"
+        vm.expectRevert(abi.encodeWithSelector(AfterHours.selector, 700));
+        controlStructures.doNotDisturb(700);
+    }
+
+    // Test DoNotDisturb function for "At lunch!"
+    function testDoNotDisturbLunchTime() public {
         vm.expectRevert(bytes("At lunch!"));
-        controlStructures.doNotDisturb(1230);
+        controlStructures.doNotDisturb(1215);
+    }
 
-        // Test valid times
-        string memory result = controlStructures.doNotDisturb(900);
-        assertEq(result, "Morning!", "Expected Morning!");
+    // Test DoNotDisturb function for valid time ranges
+    function testDoNotDisturbMorning() public {
+        assertEq(controlStructures.doNotDisturb(900), "Morning!");
+    }
 
-        result = controlStructures.doNotDisturb(1400);
-        assertEq(result, "Afternoon!", "Expected Afternoon!");
+    function testDoNotDisturbAfternoon() public {
+        assertEq(controlStructures.doNotDisturb(1500), "Afternoon!");
+    }
 
-        result = controlStructures.doNotDisturb(1900);
-        assertEq(result, "Evening!", "Expected Evening!");
+    function testDoNotDisturbEvening() public {
+        assertEq(controlStructures.doNotDisturb(1900), "Evening!");
+    }
+
+    // Test DoNotDisturb function for unexpected fallback (if applicable)
+    function testDoNotDisturbUnexpectedTime() public {
+        assertEq(controlStructures.doNotDisturb(0), "Invalid time range");
     }
 }
