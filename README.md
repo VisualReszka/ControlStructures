@@ -17,3 +17,9 @@ This contract is designed for the **Base Sepolia Testnet**.
 
 ## Note
 This is a learning exercise derived from the Base documentation and is intended for educational purposes only. For more details, visit the [Base Learn](https://docs.base.org/base-learn/) website.
+
+--------
+
+## Progress
+Badges Earned: 2 out of 13. 🎉
+Still a long way to go, but making progress!
